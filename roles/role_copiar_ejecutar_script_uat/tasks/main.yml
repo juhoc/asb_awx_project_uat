@@ -2,7 +2,7 @@
   ansible.builtin.file:
     path: /var/opt/ansible/uatgetinfo
     state: directory
-    mode: 0544
+    mode: 0764
     
 - name: Envio de scripts UAT
   ansible.builtin.copy:
