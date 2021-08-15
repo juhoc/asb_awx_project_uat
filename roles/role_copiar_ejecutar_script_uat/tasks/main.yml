@@ -21,8 +21,7 @@
 - name: Mover archivo UAT
   become: yes
   become_method: sudo
-  ansible.builtin.command:
-    cmd: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
+  ansible.builtin.command: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
   
 - name: Cambiar permisos archivo UAT
   become: yes
