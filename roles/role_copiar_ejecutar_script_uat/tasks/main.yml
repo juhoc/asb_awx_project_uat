@@ -1,11 +1,11 @@
 - name: Crear directorio de UAT
-  file:
+  ansible.builtin.file:
     path: /var/opt/ansible/uatgetinfo
     state: directory
-    mode: 0700
+    mode: 0544
     
 - name: Envio de scripts UAT
-  copy:
+  ansible.builtin.copy:
     src: files/iam_extract_global.sh
     dest: /var/opt/ansible/uatgetinfo
     mode: 0500
@@ -14,10 +14,26 @@
 - name: Ejecucion de script UAT
   become: yes
   become_method: sudo
-  shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
-  register: status_iam
+  ansible.builtin.shell: 
+    cmd: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
+  register: status_iamex
   failed_when: status_iam.rc not in [ 0, 1 ]
+
+- name: Mover archivo UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.command:
+    cmd: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
+  
+- name: Cambiar permisos archivo UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.file:
+    path: /var/opt/ansible/uatgetinfo/*.mef3
+    owner: bvmuxat2
+    group: automate
+    mode: 0644
   
 - name: Imprime ejecucion del script iam
   debug:
-    msg: "{{ status_iam.stdout_lines }}"
+    msg: "{{ status_iamex.stdout_lines }}"
