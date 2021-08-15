@@ -14,10 +14,9 @@
 - name: Ejecucion de script UAT
   become: yes
   become_method: sudo
-  ansible.builtin.shell: 
-    cmd: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
+  ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
   register: status_iamex
-  #failed_when: status_iam.rc not in [ 0, 1 ]
+  failed_when: status_iam.rc not in [ 0, 1 ]
 
 - name: Mover archivo UAT
   become: yes
