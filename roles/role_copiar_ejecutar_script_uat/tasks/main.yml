@@ -1,20 +1,20 @@
 - name: Crear directorio de UAT
   file:
-    path: /tmp/uatgetinfo
+    path: /var/opt/ansible/uatgetinfo
     state: directory
     mode: 0700
     
 - name: Envio de scripts UAT
   copy:
     src: files/iam_extract_global.sh
-    dest: /tmp/uatgetinfo
+    dest: /var/opt/ansible/uatgetinfo
     mode: 0500
     force: yes
 
 - name: Ejecucion de script UAT
   become: yes
   become_method: sudo
-  shell: /tmp/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
+  shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
   register: status_iam
   failed_when: status_iam.rc not in [ 0, 1 ]
   
