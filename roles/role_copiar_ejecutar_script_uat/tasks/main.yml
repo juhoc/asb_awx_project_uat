@@ -2,7 +2,7 @@
   ansible.builtin.file:
     path: /var/opt/ansible/uatgetinfo
     state: directory
-    mode: 0764
+    mode: 0700
     
 - name: Envio de scripts UAT
   ansible.builtin.copy:
@@ -15,7 +15,7 @@
   become: yes
   become_method: sudo
   ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
-  register: status_iamex
+  register: status_iam
   failed_when: status_iam.rc not in [ 0, 1 ]
 
 - name: Mover archivo UAT
@@ -35,4 +35,4 @@
   
 - name: Imprime ejecucion del script iam
   debug:
-    msg: "{{ status_iamex.stdout_lines }}"
+    msg: "{{ status_iam.stdout_lines }}"
