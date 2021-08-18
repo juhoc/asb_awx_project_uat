@@ -15,23 +15,34 @@
   become: yes
   become_method: sudo
   ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
-  register: status_iam
+  register: ejecucion_iam
   failed_when: status_iam.rc not in [ 0, 1 ]
 
-- name: Mover archivo UAT
+- name: Buscar el archivo UAT
   become: yes
-  become_method: sudo
-  ansible.builtin.command: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
+  ansible.builtin.find:
+    path: /tmp
+    patterns: '*.mef3'
+    register: archivo_a_copiar
+
+#- name: Mover archivo UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.command: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
   
-- name: Cambiar permisos archivo UAT
-  become: yes
-  become_method: sudo
-  ansible.builtin.file:
-    path: /var/opt/ansible/uatgetinfo/*.mef3
-    owner: bvmuxat2
-    group: automate
-    mode: 0644
+#- name: Cambiar permisos archivo UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.file:
+#    path: /var/opt/ansible/uatgetinfo/*.mef3
+#    owner: bvmuxat2
+#    group: automate
+#    mode: 0644
   
 - name: Imprime ejecucion del script iam
   debug:
     msg: "{{ status_iam.stdout_lines }}"
+
+- name: Imprime lista de archivos UAT
+  debug:
+    msg: "{{ archivo_a_copiar.stdout_lines }}"
