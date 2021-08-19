@@ -21,7 +21,7 @@
 - name: Buscar el archivo UAT
   become: yes
   ansible.builtin.find:
-    path: /tmp
+    paths: /tmp
     patterns: '*.mef3'
     register: archivo_a_copiar
 
