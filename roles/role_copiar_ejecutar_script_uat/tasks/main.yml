@@ -22,6 +22,7 @@
   become: yes
   find:
     paths: /tmp
+    recurse: yes
     patterns: '*.mef3'
     register: archivo_a_copiar
 
