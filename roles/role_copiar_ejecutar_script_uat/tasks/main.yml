@@ -16,7 +16,7 @@
   become_method: sudo
   ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
   register: ejecucion_iam
-  failed_when: status_iam.rc not in [ 0, 1 ]
+  failed_when: ejecucion_iam.rc not in [ 0, 1 ]
 
 - name: Buscar el archivo UAT
   become: yes
@@ -41,7 +41,7 @@
   
 - name: Imprime ejecucion del script iam
   debug:
-    msg: "{{ status_iam.stdout_lines }}"
+    msg: "{{ ejecucion_iam.stdout_lines }}"
 
 - name: Imprime lista de archivos UAT
   debug:
