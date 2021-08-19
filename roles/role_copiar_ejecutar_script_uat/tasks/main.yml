@@ -22,8 +22,9 @@
   become: yes
   find:
     paths: /tmp
-    recurse: yes
     patterns: '*.mef3'
+    age: 1d
+    age_stamp: mtime
     register: archivo_a_copiar
 
 #- name: Mover archivo UAT
@@ -45,5 +46,5 @@
     msg: "{{ ejecucion_iam.stdout_lines }}"
 
 - name: Imprime lista de archivos UAT
-  debug:
-    msg: "{{ archivo_a_copiar.stdout_lines }}"
+  debug: var=item.path
+  with_items: "{{ archivo_a_copiar.files }}"
