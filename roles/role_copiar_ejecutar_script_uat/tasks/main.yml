@@ -21,10 +21,8 @@
 - name: Buscar el archivo UAT
   become: yes
   find:
-    paths: /tmp
-    patterns: '*.mef3'
-    age: 1d
-    age_stamp: mtime
+    paths: "/tmp"
+    patterns: "*.mef3"
     register: archivo_a_copiar
 
 #- name: Mover archivo UAT
