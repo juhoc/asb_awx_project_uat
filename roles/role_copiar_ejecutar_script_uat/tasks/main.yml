@@ -46,4 +46,4 @@
 
 - name: Imprime lista de archivos UAT
   debug: 
-    msg: "{{ archivo_a_copiar.file|map(attribute='path') | list }}"
+    msg: "{{ archivo_a_copiar }}"
