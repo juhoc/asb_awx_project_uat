@@ -22,8 +22,9 @@
   become: yes
   find:
     paths: "/tmp"
+    file_type: file
     patterns: "*.mef3"
-    register: archivo_a_copiar
+  register: archivo_a_copiar
 
 #- name: Mover archivo UAT
 #  become: yes
@@ -44,5 +45,5 @@
     msg: "{{ ejecucion_iam.stdout_lines }}"
 
 - name: Imprime lista de archivos UAT
-  debug: var=item.path
-  with_items: "{{ archivo_a_copiar.files }}"
+  debug: 
+    msg: "{{ archivo_a_copiar.file|map(attribute='path') | list }}"
