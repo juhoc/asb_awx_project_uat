@@ -23,6 +23,8 @@
   register: busca_archivo_iam
   
 - name: Mover archivo UAT
+  become: yes
+  become_method: sudo
   ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/uatgetinfo/
   with_items:
     - "{{ busca_archivo_iam.stdout_lines }}"
