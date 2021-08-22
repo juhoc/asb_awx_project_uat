@@ -1,22 +1,22 @@
-#- name: Crear directorio de UAT
-#  ansible.builtin.file:
-#    path: /var/opt/ansible/uatgetinfo
-#    state: directory
-#    mode: 0700
+- name: Crear directorio de UAT
+  ansible.builtin.file:
+    path: /var/opt/ansible/uatgetinfo
+    state: directory
+    mode: 0700
     
-#- name: Envio de scripts UAT
-#  ansible.builtin.copy:
-#    src: files/iam_extract_global.sh
-#    dest: /var/opt/ansible/uatgetinfo
-#    mode: 0500
-#    force: yes
+- name: Envio de scripts UAT
+  ansible.builtin.copy:
+    src: files/iam_extract_global.sh
+    dest: /var/opt/ansible/uatgetinfo
+    mode: 0500
+    force: yes
 
-#- name: Ejecucion de script UAT
-#  become: yes
-#  become_method: sudo
-#  ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
-#  register: ejecucion_iam
-#  failed_when: ejecucion_iam.rc not in [ 0, 1 ]
+- name: Ejecucion de script UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
+  register: ejecucion_iam
+  failed_when: ejecucion_iam.rc not in [ 0, 1 ]
   
 - name: Buscar archivo UAT
   ansible.builtin.shell: ls -1 /tmp | grep ^IBM
@@ -25,41 +25,16 @@
 - name: Mover archivo UAT
   become: yes
   become_method: sudo
-  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/uatgetinfo/
+  ansible.builtin.shell: 
+    - mv /tmp/{{ item }} /var/opt/ansible/uatgetinfo/
+    - chown bvmuxt2:automate /var/opt/ansible/uatgetinfo/{{ item }}
   with_items:
     - "{{ busca_archivo_iam.stdout_lines }}"
-  register: mover_archivo_iam  
-
-#- name: Buscar el archivo UAT
-#  become: yes
-#  find:
-#    paths: "/tmp"
-#    file_type: file
-#    patterns: "*.mef3"
-#  register: archivo_a_copiar
-
-#- name: Mover archivo UAT
-#  become: yes
-#  become_method: sudo
-#  ansible.builtin.command: mv /tmp/*.mef3 /var/opt/ansible/uatgetinfo/
   
-#- name: Cambiar permisos archivo UAT
-#  become: yes
-#  become_method: sudo
-#  ansible.builtin.file:
-#    path: /var/opt/ansible/uatgetinfo/*.mef3
-#    owner: bvmuxat2
-#    group: automate
-#    mode: 0644
-  
-#- name: Imprime ejecucion del script iam
-#  debug:
-#    msg: "{{ ejecucion_iam.stdout_lines }}"
-
-#- name: Imprime buscar archivo iam
-#  debug:
-#    msg: "{{ busca_archivo_iam.stdout_lines }}"
-
-- name: Imprime mover archivo iam
+- name: Imprime ejecucion del script iam
   debug:
-    msg: "{{ mover_archivo_iam.stdout_lines }}"
+    msg: "{{ ejecucion_iam.stdout_lines }}"
+
+- name: Imprime creacion del archivo iam
+  debug:
+    msg: "{{ busca_archivo_iam.stdout_lines }}"
