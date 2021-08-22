@@ -18,13 +18,13 @@
   register: ejecucion_iam
   failed_when: ejecucion_iam.rc not in [ 0, 1 ]
 
-- name: Buscar el archivo UAT
-  become: yes
-  find:
-    paths: "/tmp"
-    file_type: file
-    patterns: "*.mef3"
-  register: archivo_a_copiar
+#- name: Buscar el archivo UAT
+#  become: yes
+#  find:
+#    paths: "/tmp"
+#    file_type: file
+#    patterns: "*.mef3"
+#  register: archivo_a_copiar
 
 #- name: Mover archivo UAT
 #  become: yes
@@ -43,7 +43,3 @@
 - name: Imprime ejecucion del script iam
   debug:
     msg: "{{ ejecucion_iam.stdout_lines }}"
-
-- name: Imprime lista de archivos UAT
-  debug: 
-    msg: "{{ archivo_a_copiar }}"
