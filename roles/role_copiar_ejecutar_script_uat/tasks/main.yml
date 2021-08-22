@@ -1,22 +1,26 @@
-- name: Crear directorio de UAT
-  ansible.builtin.file:
-    path: /var/opt/ansible/uatgetinfo
-    state: directory
-    mode: 0700
+#- name: Crear directorio de UAT
+#  ansible.builtin.file:
+#    path: /var/opt/ansible/uatgetinfo
+#    state: directory
+#    mode: 0700
     
-- name: Envio de scripts UAT
-  ansible.builtin.copy:
-    src: files/iam_extract_global.sh
-    dest: /var/opt/ansible/uatgetinfo
-    mode: 0500
-    force: yes
+#- name: Envio de scripts UAT
+#  ansible.builtin.copy:
+#    src: files/iam_extract_global.sh
+#    dest: /var/opt/ansible/uatgetinfo
+#    mode: 0500
+#    force: yes
 
-- name: Ejecucion de script UAT
-  become: yes
-  become_method: sudo
-  ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
-  register: ejecucion_iam
-  failed_when: ejecucion_iam.rc not in [ 0, 1 ]
+#- name: Ejecucion de script UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.shell: /var/opt/ansible/uatgetinfo/iam_extract_global.sh 2>/dev/null -c IBM
+#  register: ejecucion_iam
+#  failed_when: ejecucion_iam.rc not in [ 0, 1 ]
+  
+- name: Buscar archivo UAT
+  ansible.builtin.shell: ls -1 /tmp | grep ^IBM
+  register: busca_archivo_iam
 
 #- name: Buscar el archivo UAT
 #  become: yes
@@ -40,6 +44,10 @@
 #    group: automate
 #    mode: 0644
   
-- name: Imprime ejecucion del script iam
+#- name: Imprime ejecucion del script iam
+#  debug:
+#    msg: "{{ ejecucion_iam.stdout_lines }}"
+
+- name: Imprime buscar archivo iam
   debug:
-    msg: "{{ ejecucion_iam.stdout_lines }}"
+    msg: "{{ busca_archivo_iam.stdout_lines }}"
