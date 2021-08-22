@@ -21,6 +21,11 @@
 - name: Buscar archivo UAT
   ansible.builtin.shell: ls -1 /tmp | grep ^IBM
   register: busca_archivo_iam
+  
+- name: Mover archivo UAT
+  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/uatgetinfo/
+  with_items:
+    - "{{ busca_archivo_iam.stdout_lines }}"
 
 #- name: Buscar el archivo UAT
 #  become: yes
