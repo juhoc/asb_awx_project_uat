@@ -38,11 +38,13 @@
 #    owner: bvmuxat2
 #    group: automate
 #  with_items:
-    - "{{ busca_archivo_iam.stdout_lines }}"
+#    - "{{ busca_archivo_iam.stdout_lines }}"
 
 - name: Salida del arvhivo de UAT
   ansible.builtin.shell: cat /var/opt/ansible/uatgetinfo/{{ item }}
   register: salida_archivo_iam
+  with_items:
+    - "{{ busca_archivo_iam.stdout_lines }}"  
 
 - name: Salida archivo a repo UAT
   ansible.builtin.shell: echo "{{ item.salida }}" > /var/opt/ansible/uatgetinfo/{{ item.archivo }}
@@ -61,8 +63,3 @@
 - name: Imprime creacion del archivo iam
   debug:
     msg: "{{ busca_archivo_iam.stdout_lines }}"
-
-
-
-
-
