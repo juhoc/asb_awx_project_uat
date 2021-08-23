@@ -41,7 +41,7 @@
 #    - "{{ busca_archivo_iam.stdout_lines }}"
   
 - name: Envia archivo a repositorio externo UAT
-  ansible.posix.synchronize:
+  synchronize:
     mode: pull
     src: /var/opt/ansible/uatgetinfo/{{ item }}
     dest: /var/opt/ansible/uatgetinfo/{{ item }}
