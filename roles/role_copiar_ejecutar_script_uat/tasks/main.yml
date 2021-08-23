@@ -32,7 +32,11 @@
 - name: Cambiar owner al archivo UAT
   become: yes
   become_method: sudo
-  ansible.builtin.shell: chown bvmuxat2:automate /var/opt/ansible/uatgetinfo/{{ item }}
+  file:
+    path: /var/opt/ansible/uatgetinfo/{{ item }}
+    mode: 0440
+    owner: bvmuxat2
+    group: automate
   with_items:
     - "{{ busca_archivo_iam.stdout_lines }}"
   
