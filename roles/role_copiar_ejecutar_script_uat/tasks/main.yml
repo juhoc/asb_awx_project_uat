@@ -42,7 +42,7 @@
 
 - name: Envia archivo a repositorio externo UAT
   synchronize:
-    mode: push
+#    mode: push
     src: /var/opt/ansible/UAT/{{ item }}
     dest: /var/opt/ansible/UAT/{{ item }}
   delegate_to: clientasbrepo01.asbawx.clt
