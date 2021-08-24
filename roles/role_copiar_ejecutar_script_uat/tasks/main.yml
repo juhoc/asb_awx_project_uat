@@ -40,14 +40,30 @@
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Envia archivo a repositorio externo UAT
-  synchronize:
+#- name: Envia archivo a repositorio externo UAT
+#  synchronize:
 #    mode: push
-    src: /var/opt/ansible/UAT/{{ item }}
-    dest: /var/opt/ansible/UAT/{{ item }}
-  delegate_to: clientasbrepo01.asbawx.clt
+#    src: /var/opt/ansible/UAT/{{ item }}
+#    dest: /var/opt/ansible/UAT/{{ item }}
+#  delegate_to: clientasbrepo01.asbawx.clt
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
+
+- name: Fetch the file from the nodo admin to master
+  fetch:
+    src: /tmp/{{ item }} 
+    dest: /tmp/
+    flat: yes
   with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+    - "{{ busca_archivo_iam.stdout_lines }}"
+
+- name: Copy the file from master to nodo admin
+  copy: 
+    src: /tmp/{{ item }}
+    dest: /var/opt/ansible/UAT
+  with_items:
+    - "{{ busca_archivo_iam.stdout_lines }}"
+  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
 
 - name: Imprime ejecucion del script UAT
   debug:
