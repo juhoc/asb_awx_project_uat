@@ -51,7 +51,7 @@
 
 - name: Fetch the file from the nodo admin to master
   fetch:
-    src: /tmp/{{ item }} 
+    src: /var/opt/ansible/uatgetinfo/{{ item }} 
     dest: /tmp/
     flat: yes
   with_items:
