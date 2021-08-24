@@ -55,14 +55,14 @@
     dest: /tmp/
     flat: yes
   with_items:
-    - "{{ busca_archivo_iam.stdout_lines }}"
+    - "{{ buscar_archivo_uat.stdout_lines }}"
 
 - name: Copy the file from master to nodo admin
   copy: 
     src: /tmp/{{ item }}
     dest: /var/opt/ansible/UAT
   with_items:
-    - "{{ busca_archivo_iam.stdout_lines }}"
+    - "{{ buscar_archivo_uat.stdout_lines }}"
   when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
 
 - name: Imprime ejecucion del script UAT
