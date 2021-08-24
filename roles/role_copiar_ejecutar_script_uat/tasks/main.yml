@@ -41,7 +41,7 @@
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
 - name: Envia archivo a repositorio externo UAT
-  synchronize:
+  ansible.posix.synchronize:
     mode: pull
     src: /var/opt/ansible/UAT/{{ item }}
     dest: /var/opt/ansible/UAT/
