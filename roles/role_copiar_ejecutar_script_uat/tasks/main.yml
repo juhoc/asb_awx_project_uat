@@ -110,20 +110,20 @@
   ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
   register: buscar_archivo_uat
 
-- name: Recuperar archivo UAT
-  run_once: yes
-  fetch: 
-    src: /var/opt/ansible/UAT/{{ item }}
-    dest: /tmp/
-    flat: yes
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
-
-#- name: Copy the file from master to mwiapp02
-#  copy: 
-#    src: /tmp/{{ item }}
-#    dest: /var/opt/ansible/UAT/
+#- name: Recuperar archivo UAT
+#  run_once: yes
+#  fetch: 
+#    src: /var/opt/ansible/UAT/{{ item }}
+#    dest: /tmp/
+#    flat: yes
 #  with_items:
 #    - "{{ buscar_archivo_uat.stdout_lines }}"
-#  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
+
+- name: Copiar archivo UAT del MCAT a NARepo
+  copy: 
+    src: /tmp/{{ item }}
+    dest: /var/opt/ansible/UAT/
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"
+  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
   
