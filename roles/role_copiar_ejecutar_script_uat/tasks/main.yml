@@ -119,11 +119,11 @@
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Copy the file from master to mwiapp02
-  copy: 
-    src: /tmp/{{ item }}
-    dest: /var/opt/ansible/UAT/
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
-  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
+#- name: Copy the file from master to mwiapp02
+#  copy: 
+#    src: /tmp/{{ item }}
+#    dest: /var/opt/ansible/UAT/
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
+#  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
   
