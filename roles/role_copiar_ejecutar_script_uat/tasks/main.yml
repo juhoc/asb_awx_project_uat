@@ -110,14 +110,14 @@
   ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
   register: buscar_archivo_uat
 
-- name: Recuperar archivo UAT
-  run_once: yes
-  fetch: 
-    src: /var/opt/ansible/UAT/{{ item }}
-    dest: /tmp/
-    flat: yes
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+#- name: Recuperar archivo UAT
+#  run_once: yes
+#  fetch: 
+#    src: /var/opt/ansible/UAT/{{ item }}
+#    dest: /tmp/
+#    flat: yes
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
 
 - name: Copiar archivo UAT del MCAT a NARepo
   copy: 
