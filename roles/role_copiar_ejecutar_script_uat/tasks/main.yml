@@ -1,53 +1,53 @@
-- name: Crear directorio de UAT
-  ansible.builtin.file:
-    path: /var/opt/ansible/UAT
-    state: directory
-    mode: 0700
+#- name: Crear directorio de UAT
+#  ansible.builtin.file:
+#    path: /var/opt/ansible/UAT
+#    state: directory
+#    mode: 0700
     
-- name: Envio de scripts UAT
-  ansible.builtin.copy:
-    src: files/iam_extract_global.sh
-    dest: /tmp
-    mode: 0500
-    force: yes
+#- name: Envio de scripts UAT
+#  ansible.builtin.copy:
+#    src: files/iam_extract_global.sh
+#    dest: /tmp
+#    mode: 0500
+#    force: yes
 
-- name: Ejecucion de script UAT
-  become: yes
-  become_method: sudo
-  ansible.builtin.shell: /tmp/iam_extract_global.sh 2>/dev/null -c IBM
-  register: ejecutar_uat
-  failed_when: ejecutar_uat.rc not in [ 0, 1 ]
+#- name: Ejecucion de script UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.shell: /tmp/iam_extract_global.sh 2>/dev/null -c IBM
+#  register: ejecutar_uat
+#  failed_when: ejecutar_uat.rc not in [ 0, 1 ]
   
-- name: Buscar archivo UAT
-  ansible.builtin.shell: ls -1 /tmp | grep ^IBM
-  register: buscar_archivo_uat
+#- name: Buscar archivo UAT
+#  ansible.builtin.shell: ls -1 /tmp | grep ^IBM
+#  register: buscar_archivo_uat
   
-- name: Mover archivo UAT
-  become: yes
-  become_method: sudo
-  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+#- name: Mover archivo UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Cambiar owner al archivo UAT
-  become: yes
-  become_method: sudo
-  file:
-    path: /var/opt/ansible/UAT/{{ item }}
-    mode: 0440
-    owner: bvmuxat2
-    group: automate
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+#- name: Cambiar owner al archivo UAT
+#  become: yes
+#  become_method: sudo
+#  file:
+#    path: /var/opt/ansible/UAT/{{ item }}
+#    mode: 0440
+#    owner: bvmuxat2
+#    group: automate
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Envia archivo a repositorio externo UAT
-  synchronize:
-    mode: pull
-    src: /var/opt/ansible/UAT/{{ item }}
-    dest: /var/opt/ansible/UAT
-  delegate_to: clientasbrepo01.asbawx.clt
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+#- name: Envia archivo a repositorio externo UAT
+#  synchronize:
+#    mode: pull
+#    src: /var/opt/ansible/UAT/{{ item }}
+#    dest: /var/opt/ansible/UAT
+#  delegate_to: clientasbrepo01.asbawx.clt
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
 
 #- name: Fetch the file from the nodo admin to master
 #  fetch:
@@ -71,10 +71,25 @@
 #    - "{{ buscar_archivo_uat.stdout_lines }}"
 #  delegate_to: clientasbrepo01.asbawx.clt
 
-- name: Imprime ejecucion del script UAT
-  debug:
-    msg: "{{ ejecutar_uat.stdout_lines }}"
+#- name: 
+#  command: 
+#    cmd: ls -1 IBM_24aug2021_clientasb02.mef3
+#    chdir: /var/opt/ansible/UAT
 
-- name: Imprime creacion del archivo UAT
+- name: Despliega contebinido de archivo UAT
+  command: 
+    cmd: cat IBM_24aug2021_clientasb02.mef3
+    chdir: /var/opt/ansible/UAT
+   register: cmd_output
+  
+- name: Imprimir contenido de archivo UAT
   debug:
-    msg: "{{ buscar_archivo_uat.stdout_lines }}"
+    msg: "{{cmd_output.stdout}}"
+
+#- name: Imprime ejecucion del script UAT
+#  debug:
+#    msg: "{{ ejecutar_uat.stdout_lines }}"
+
+#- name: Imprime creacion del archivo UAT
+#  debug:
+#    msg: "{{ buscar_archivo_uat.stdout_lines }}"
