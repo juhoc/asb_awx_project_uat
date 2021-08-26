@@ -80,11 +80,11 @@
   command: 
     cmd: cat /var/opt/ansible/UAT/IBM_24aug2021_clientasb02.mef3
 #    chdir: /var/opt/ansible/UAT
-   register: cmd_output
+   register: contenido_archivo_uat
   
 - name: Imprimir contenido de archivo UAT
   debug:
-    msg: "{{cmd_output.stdout}}"
+    msg: "{{ contenido_archivo_uat.stdout_lines }}"
 
 #- name: Imprime ejecucion del script UAT
 #  debug:
