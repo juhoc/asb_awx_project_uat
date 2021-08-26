@@ -113,17 +113,16 @@
 - name: Recuperar archivo UAT
   run_once: yes
   fetch: 
-    src: /tmp/{{ item }}
+    src: /var/opt/ansible/UAT/{{ item }}
     dest: buffer/
     flat: yes
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
-  when: "{{ inventory_hostname == 'clientasb02.asbawx.clt' }}"  
 
-- name: Copiar archivo de master to node administrado
+- name: Copy the file from master to mwiapp02
   copy: 
     src: buffer/{{ item }}
-    dest: /tmp/
+    dest: /var/opt/ansible/UAT/
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
   when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
