@@ -114,7 +114,7 @@
   run_once: yes
   fetch: 
     src: /var/opt/ansible/UAT/{{ item }}
-    dest: /tmp
+    dest: buffer/
     flat: yes
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
