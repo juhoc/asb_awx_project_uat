@@ -122,7 +122,7 @@
 - name: Copiar archivo UAT del MCAT a NARepo
   copy: 
     src: /tmp/{{ item }}
-    dest: /var/opt/ansible/UAT/
+    dest: /tmp/
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
   when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
