@@ -114,14 +114,14 @@
   run_once: yes
   fetch: 
     src: /var/opt/ansible/UAT/{{ item }}
-    dest: buffer/
+    dest: /tmp/
     flat: yes
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
 - name: Copy the file from master to mwiapp02
   copy: 
-    src: buffer/{{ item }}
+    src: /tmp/{{ item }}
     dest: /var/opt/ansible/UAT/
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
