@@ -119,7 +119,7 @@
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Copiar archivo de master to node administrado (clientasbrepo01.asbawx.clt)
+- name: Copiar archivo de master to node administrado
   copy: 
     src: buffer/{{ item }}
     dest: /var/opt/ansible/UAT/{{ item }}
