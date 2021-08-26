@@ -119,11 +119,11 @@
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
 
-#- name: Copiar archivo de master to node administrado
-#  copy: 
-#    src: buffer/{{ item }}
-#    dest: /var/opt/ansible/UAT/{{ item }}
-#  with_items:
-#    - "{{ buscar_archivo_uat.stdout_lines }}"
-#  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
+- name: Copiar archivo de master to node administrado
+  copy: 
+    src: /tmp/{{ item }}
+    dest: /var/opt/ansible/UAT/{{ item }}
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"
+  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
   
