@@ -76,14 +76,27 @@
 #    cmd: ls -1 IBM_24aug2021_clientasb02.mef3
 #    chdir: /var/opt/ansible/UAT
 
-- name: Despliega contebinido de archivo UAT
-  command: 
-    cmd: cat /var/opt/ansible/UAT/IBM_24aug2021_clientasb02.mef3
-  register: contenido_archivo_uat
+#- name: Buscar archivo UAT
+#  ansible.builtin.shell: ls -1 /tmp | grep ^IBM
+#  register: buscar_archivo_uat
+
+#- name: Despliega contebinido de archivo UAT
+#  command: 
+#    cmd: cat /tmp/{{ item }}
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"
+#  register: contenido_archivo_uat
+
+#- name: Despliega contebinido de archivo UAT
+#  command: 
+#    cmd: echo {{ item }} >> /tmp/
+#  with_items:
+#    - "{{ contenido_archivo_uat.stdout_lines }}"
+#  delegate_to: clientasbrepo01.asbawx.clt
   
-- name: Imprimir contenido de archivo UAT
-  debug:
-    msg: "{{ contenido_archivo_uat.stdout_lines }}"
+#- name: Imprimir contenido de archivo UAT
+#  debug:
+#    msg: "{{ contenido_archivo_uat.stdout_lines }}"
 
 #- name: Imprime ejecucion del script UAT
 #  debug:
@@ -92,3 +105,17 @@
 #- name: Imprime creacion del archivo UAT
 #  debug:
 #    msg: "{{ buscar_archivo_uat.stdout_lines }}"
+
+- name: Buscar archivo UAT
+  ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
+  register: buscar_archivo_uat
+
+- name: Recuperar archivo UAT
+  run_once: yes
+  fetch: 
+    src: /var/opt/ansible/UAT/{{ item }}
+    dest: /tmp
+    flat: yes
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"
+
