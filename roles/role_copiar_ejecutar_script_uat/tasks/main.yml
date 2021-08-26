@@ -118,6 +118,7 @@
     flat: yes
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
+  when: "{{inventory_hostname == 'clientasb02.asbawx.clt'}}"  
 
 - name: Copiar archivo de master to node administrado
   copy: 
@@ -125,5 +126,5 @@
     dest: /var/opt/ansible/UAT/{{ item }}
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
-  when: "{{ inventory_hostname == clientasbrepo01.asbawx.clt }}"
+  when: "{{inventory_hostname == 'clientasbrepo01.asbawx.clt'}}"
   
