@@ -78,8 +78,8 @@
 
 - name: Despliega contebinido de archivo UAT
   command: 
-    cmd: cat IBM_24aug2021_clientasb02.mef3
-    chdir: /var/opt/ansible/UAT
+    cmd: cat /var/opt/ansible/UAT/IBM_24aug2021_clientasb02.mef3
+#    chdir: /var/opt/ansible/UAT
    register: cmd_output
   
 - name: Imprimir contenido de archivo UAT
