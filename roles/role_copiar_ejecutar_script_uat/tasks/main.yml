@@ -135,6 +135,7 @@
   ansible.builtin.file: 
     path: /var/opty/ansible/UAT/{{ item }}
     state: touch
+  become: yes
 #    warn: false
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"  
