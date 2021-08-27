@@ -9,6 +9,6 @@
     - "{{ buscar_archivo_uat.stdout_lines }}"
   register: contenido_archivo_uat
   
-- name: Imprimir contenido de archivo UAT
-  debug:
-    msg: "{{ contenido_archivo_uat.stdout_lines }}"
+#- name: Imprimir contenido de archivo UAT
+#  debug:
+#    msg: "{{ contenido_archivo_uat.stdout_lines }}"
