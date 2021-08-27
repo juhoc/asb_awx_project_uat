@@ -21,7 +21,7 @@
   ansible.builtin.copy:
     dest: "/var/opt/ansible/UAT/{{ item }}"
     content: |
-      {{ contenido_archivo_uat.stdout_lines }}
+      "{{ contenido_archivo_uat.stdout }}"
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"    
   delegate_to: clientasbrepo01.asbawx.clt
