@@ -80,12 +80,12 @@
 #  ansible.builtin.shell: ls -1 /tmp | grep ^IBM
 #  register: buscar_archivo_uat
 
-#- name: Despliega contebinido de archivo UAT
-#  command: 
-#    cmd: cat /tmp/{{ item }}
-#  with_items:
-#    - "{{ buscar_archivo_uat.stdout_lines }}"
-#  register: contenido_archivo_uat
+- name: Despliega contebinido de archivo UAT
+  command: 
+    cmd: cat /var/opt/ansible/UAT/{{ item }}
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"
+  register: contenido_archivo_uat
 
 #- name: Despliega contebinido de archivo UAT
 #  command: 
@@ -135,13 +135,19 @@
   ansible.builtin.file: 
     path: /var/opt/ansible/UAT/{{ item }}
     state: touch
-#    mode: 0777
-#    owner: bvmuxat2
-#  become: yes
-#    warn: false
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
+
+- name: Agregar contenido al archivo UAT
+  copy:
+    dest: "/var/opt/ansible/UAT/{{ item }}"
+    content: |
+      {{ contenido_archivo_uat.stdout }}
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"    
+  delegate_to: clientasbrepo01.asbawx.clt
+    
 
 #- name: Imprime la salida del nombre de otro nodo administrado donde no se ejecuta el playbook
 #  debug:
