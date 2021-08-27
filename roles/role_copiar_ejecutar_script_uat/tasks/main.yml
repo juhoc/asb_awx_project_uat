@@ -1,3 +1,7 @@
+- name: Buscar archivo UAT
+  ansible.builtin.shell: ls -1rt /var/opt/ansible/UAT | grep ^IBM
+  register: buscar_archivo_uat
+
 - name: Desplegar contebinido de archivo UAT
   command: 
     cmd: cat /var/opt/ansible/UAT/{{ item }}
