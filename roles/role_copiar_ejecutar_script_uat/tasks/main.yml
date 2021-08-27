@@ -137,7 +137,7 @@
     - "{{ buscar_archivo_uat.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
 
-- name: Imprime la salida del nombre de otro nodo administrado donde no se ejecuta el playbook
-  debug:
-    msg: Este es la salida del {{ otronodoadmin_output.stdout }}
+#- name: Imprime la salida del nombre de otro nodo administrado donde no se ejecuta el playbook
+#  debug:
+#    msg: Este es la salida del {{ otronodoadmin_output.stdout }}
 
