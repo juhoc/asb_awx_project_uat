@@ -17,9 +17,9 @@
 #    - "{{ buscar_archivo_uat.stdout_lines }}"  
 #  delegate_to: clientasbrepo01.asbawx.clt
   
-- name: Imprimir contenido de archivo UAT
-  debug:
-   msg: "{{ contenido_archivo_uat.stdout }}"
+#- name: Imprimir contenido de archivo UAT
+#  debug:
+#   msg: "{{ contenido_archivo_uat.stdout }}"
 
 #- name: Agregar contenido al archivo UAT
 #  ansible.builtin.copy:
