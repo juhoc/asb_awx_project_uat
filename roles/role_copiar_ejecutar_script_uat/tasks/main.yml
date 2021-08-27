@@ -11,4 +11,4 @@
   
 - name: Imprimir contenido de archivo UAT
   debug:
-    msg: "{{ contenido_archivo_uat.stdout_lines }}"
+    msg: "{{ contenido_archivo_uat.stdout }}"
