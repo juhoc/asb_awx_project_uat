@@ -20,8 +20,15 @@
   failed_when: ejecutar_uat.rc not in [ 0, 1 ]
 
 - name: Buscar archivo UAT
-  ansible.builtin.shell: ls -1rt /var/opt/ansible/UAT | grep ^IBM
+  ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
   register: buscar_archivo_uat
+
+- name: Mover archivo UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"
 
 - name: Desplegar contebinido de archivo UAT
   ansible.builtin.command: 
