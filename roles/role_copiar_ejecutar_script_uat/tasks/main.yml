@@ -19,7 +19,7 @@
   
 - name Mostrar contenido archivo UAT
   debug:
-    var: contenido_archivo_uat.stdout_lines
+  var: contenido_archivo_uat.stdout_lines
 
 #- name: Agregar contenido al archivo UAT
 #  ansible.builtin.copy:
