@@ -16,43 +16,39 @@
   become_method: sudo
   ansible.builtin.shell:
     cmd: /tmp/iam_extract_global.sh 2>/dev/null -c IBM
-  register: ejecutar_uat
-  failed_when: ejecutar_uat.rc not in [ 0, 1 ]
+  register: sldeuat1
+  failed_when: sldeuat1.rc not in [ 0, 1 ]
 
 - name: Buscar archivo UAT
   ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
-  register: buscar_archivo_uat
+  register: sldeuat2
 
 - name: Mover archivo UAT
   become: yes
   become_method: sudo
   ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
   with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+    - "{{ sldeuat2.stdout_lines }}"
 
 - name: Desplegar contebinido de archivo UAT
   ansible.builtin.command: 
     cmd: cat /var/opt/ansible/UAT/{{ item }}
   with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
-  register: contenido_archivo_uat
+    - "{{ sldeuat2.stdout_lines }}"
+  register: sldeuat3
 
 - name: Crea archivo con el nombre asignado a UAT
   ansible.builtin.file: 
     path: /var/opt/ansible/UAT/{{ item }}
     state: touch
   with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"  
+    - "{{ sldeuat2.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
   
-#- name: Imprimir contenido de archivo UAT
-#  debug:
-#   msg: "{{ contenido_archivo_uat.stdout }}"
-
 - name: Agregar contenido al archivo UAT
   ansible.builtin.copy:
     dest: "/var/opt/ansible/UAT/{{ item }}"
-    content: "{{ contenido_archivo_uat.stdout |to_nice_yaml }}"    
+    content: "{{ sldeuat3 |to_nice_yaml }}"    
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
   delegate_to: clientasbrepo01.asbawx.clt
