@@ -133,10 +133,10 @@
 
 - name: Crea archivo con el nombre asignado a UAT
   ansible.builtin.shell: 
-    cmd: touch /var/opty/ansible/UAT/{{ item }}
-    warn: false
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"  
+    cmd: touch /var/opty/ansible/UAT/holamundo.txt
+#    warn: false
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
 
 #- name: Imprime la salida del nombre de otro nodo administrado donde no se ejecuta el playbook
