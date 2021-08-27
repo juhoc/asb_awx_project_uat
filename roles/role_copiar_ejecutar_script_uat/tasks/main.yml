@@ -106,9 +106,9 @@
 #  debug:
 #    msg: "{{ buscar_archivo_uat.stdout_lines }}"
 
-#- name: Buscar archivo UAT
-#  ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
-#  register: buscar_archivo_uat
+- name: Buscar archivo UAT
+  ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
+  register: buscar_archivo_uat
 
 #- name: Recuperar archivo UAT
 #  run_once: yes
@@ -127,18 +127,15 @@
 #    - "{{ buscar_archivo_uat.stdout_lines }}"
 #  when: "{{ inventory_hostname == 'clientasbrepo01.asbawx.clt' }}"
   
-- name : Obtener el nombre del nodo administrado donde se ejecupa el playbook
-  command: uname -n
-  register: nodoadmin_output
-  
-- name: Imprime la salida del nombre del nodo administrado donde se ejecuta el playbook
-  debug:
-    msg: Este es la salida del {{ nodoadmin_output.stdout }}
+#- name : Obtener el nombre del nodo administrado donde se ejecupa el playbook
+#  command: uname -n
+#  register: nodoadmin_output
 
-- name: Obten el nombre de un nodo administra que esta en el inventario o que no este en el inventario
-  command: uname -n
+- name: Crea archivo con el nombre asignado a UAT
+  command: touch /var/opty/ansible/UAT/{{ item }}
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
-  register: otronodoadmin_output
 
 - name: Imprime la salida del nombre de otro nodo administrado donde no se ejecuta el playbook
   debug:
