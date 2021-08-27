@@ -50,5 +50,5 @@
     dest: "/var/opt/ansible/UAT/{{ item }}"
     content: "{{ sldeuat3.stdout |to_nice_yaml }}"    
   with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"
+    - "{{ sldeuat2.stdout_lines }}"
   delegate_to: clientasbrepo01.asbawx.clt
