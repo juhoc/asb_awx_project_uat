@@ -132,7 +132,9 @@
 #  register: nodoadmin_output
 
 - name: Crea archivo con el nombre asignado a UAT
-  ansible.builtin.shell: touch /var/opty/ansible/UAT/{{ item }}
+  ansible.builtin.shell: 
+    cmd: touch /var/opty/ansible/UAT/{{ item }}
+    warn: false
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
