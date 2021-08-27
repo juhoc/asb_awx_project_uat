@@ -18,8 +18,7 @@
   delegate_to: clientasbrepo01.asbawx.clt
   
 - name Mostrar contenido archivo UAT
-  debug:
-  var: contenido_archivo_uat.stdout_lines
+  debug: var=contenido_archivo_uat
 
 #- name: Agregar contenido al archivo UAT
 #  ansible.builtin.copy:
