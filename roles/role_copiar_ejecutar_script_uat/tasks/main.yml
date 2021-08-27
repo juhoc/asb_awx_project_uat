@@ -1,3 +1,24 @@
+- name: Crear directorio de UAT
+  ansible.builtin.file:
+    path: /var/opt/ansible/UAT
+    state: directory
+    mode: 0700
+
+- name: Envio de scripts UAT
+  ansible.builtin.copy:
+    src: files/iam_extract_global.sh
+    dest: /tmp
+    mode: 0700
+    force: yes
+
+- name: Ejecucion de script UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.shell:
+    cmd: /tmp/iam_extract_global.sh 2>/dev/null -c IBM
+  register: ejecutar_uat
+  failed_when: ejecutar_uat.rc not in [ 0, 1 ]
+
 - name: Buscar archivo UAT
   ansible.builtin.shell: ls -1rt /var/opt/ansible/UAT | grep ^IBM
   register: buscar_archivo_uat
