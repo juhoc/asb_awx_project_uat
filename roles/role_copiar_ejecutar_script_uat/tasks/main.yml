@@ -9,16 +9,17 @@
     - "{{ buscar_archivo_uat.stdout_lines }}"
   register: contenido_archivo_uat
 
-- name: Crea archivo con el nombre asignado a UAT
-  ansible.builtin.file: 
-    path: /var/opt/ansible/UAT/{{ item }}
-    state: touch
-  with_items:
-    - "{{ buscar_archivo_uat.stdout_lines }}"  
-  delegate_to: clientasbrepo01.asbawx.clt
+#- name: Crea archivo con el nombre asignado a UAT
+#  ansible.builtin.file: 
+#    path: /var/opt/ansible/UAT/{{ item }}
+#    state: touch
+#  with_items:
+#    - "{{ buscar_archivo_uat.stdout_lines }}"  
+#  delegate_to: clientasbrepo01.asbawx.clt
   
 - name Mostrar contenido archivo UAT
-  debug: var=contenido_archivo_uat
+  debug: 
+    var: contenido_archivo_uat.stdout_lines
 
 #- name: Agregar contenido al archivo UAT
 #  ansible.builtin.copy:
