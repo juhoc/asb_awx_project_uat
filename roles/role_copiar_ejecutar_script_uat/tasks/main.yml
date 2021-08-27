@@ -19,7 +19,7 @@
   
 - name: Imprimir contenido de archivo UAT
   debug:
-   msg: "Hola"
+   msg: "{{ contenido_archivo_uat.stdout }}"
 
 #- name: Agregar contenido al archivo UAT
 #  ansible.builtin.copy:
