@@ -8,7 +8,11 @@
   with_items:
     - "{{ buscar_archivo_uat.stdout_lines }}"
   register: contenido_archivo_uat
-  
-- name: Imprimir contenido de archivo UAT
+
+- name: Imprime creacion del archivo UAT
   debug:
-    msg: "{{ contenido_archivo_uat.stdout }}"
+    msg: "{{ buscar_archivo_uat.stdout_lines }}"
+
+#- name: Imprimir contenido de archivo UAT
+#  debug:
+#    msg: "{{ contenido_archivo_uat.stdout }}"
