@@ -9,10 +9,10 @@
     - "{{ buscar_archivo_uat.stdout_lines }}"
   register: contenido_archivo_uat
 
-- name: Imprime creacion del archivo UAT
-  debug:
-    msg: "{{ buscar_archivo_uat.stdout_lines }}"
-
-#- name: Imprime contenido de archivo UAT
-#  debug:
-#    msg: "{{ contenido_archivo_uat.stdout_lines }}"
+- name: Crea archivo con el nombre asignado a UAT
+  ansible.builtin.file: 
+    path: /var/opt/ansible/UAT/{{ item }}
+    state: touch
+  with_items:
+    - "{{ buscar_archivo_uat.stdout_lines }}"  
+  delegate_to: clientasbrepo01.asbawx.clt
