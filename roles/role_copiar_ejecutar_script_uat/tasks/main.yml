@@ -13,6 +13,6 @@
   debug:
     msg: "{{ buscar_archivo_uat.stdout_lines }}"
 
-- name: Imprimir contenido de archivo UAT
+- name: Imprime contenido de archivo UAT
   debug:
     msg: "{{ contenido_archivo_uat.stdout_lines }}"
