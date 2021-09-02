@@ -20,35 +20,39 @@
   failed_when: sldeuat1.rc not in [ 0, 1 ]
 
 - name: Buscar archivo UAT
-  ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
+  ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
   register: sldeuat2
+  failed_when: sldeuat2.stdout_lines == ""
 
-- name: Mover archivo UAT
-  become: yes
-  become_method: sudo
-  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
-  with_items:
-    - "{{ sldeuat2.stdout_lines }}"
+- name: Imprime contenido de archivo UAT
+  debug:
+    msg: "{{ sldeuat2.stdout }}"
 
 - name: Desplegar contebinido de archivo UAT
-  ansible.builtin.command: 
-    cmd: cat /var/opt/ansible/UAT/{{ item }}
-  with_items:
-    - "{{ sldeuat2.stdout_lines }}"
+  ansible.builtin.command:
+    cmd: cat /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
   register: sldeuat3
+  failed_when: sldeuat3.stdout_lines == ""
+
+- name: Imprime contenido de archivo UAT
+  debug:
+    msg: "{{ sldeuat3.stdout_lines }}"
 
 - name: Crea archivo con el nombre asignado a UAT
-  ansible.builtin.file: 
-    path: /var/opt/ansible/UAT/{{ item }}
+  ansible.builtin.file:
+    path: /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
     state: touch
-  with_items:
-    - "{{ sldeuat2.stdout_lines }}"  
   delegate_to: clientasbrepo01.asbawx.clt
-  
+
 - name: Agregar contenido al archivo UAT
   ansible.builtin.copy:
+    content: "{{ sldeuat3.stdout_lines | to_nice_json(indent=0) }}"
     dest: "/var/opt/ansible/UAT/{{ item }}"
-    content: "{{ sldeuat3.stdout |to_nice_yaml }}"    
   with_items:
-    - "{{ sldeuat2.stdout_lines }}"
+    - "{{ sldeuat2.stdout }}"
+  delegate_to: clientasbrepo01.asbawx.clt
+
+- name: Cambiar formato al archivo UAT
+  ansible.builtin.command:
+    cmd: sed -i 's/\"//g; s/,$//g; s/\[//g; s/\]//g' /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
   delegate_to: clientasbrepo01.asbawx.clt
