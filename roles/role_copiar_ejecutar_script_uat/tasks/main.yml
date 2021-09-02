@@ -28,6 +28,13 @@
   debug:
     msg: "{{ sldeuat2.stdout }}"
 
+- name: Mover archivo UAT
+  become: yes
+  become_method: sudo
+  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
+  with_items:
+    - "{{ sldeuat2.stdout_lines }}"
+
 - name: Desplegar contebinido de archivo UAT
   ansible.builtin.command:
     cmd: cat /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
