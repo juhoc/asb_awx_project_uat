@@ -20,7 +20,7 @@
   failed_when: sldeuat1.rc not in [ 0, 1 ]
 
 - name: Buscar archivo UAT
-  ansible.builtin.shell: ls -1 /var/opt/ansible/UAT | grep ^IBM
+  ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
   register: sldeuat2
   failed_when: sldeuat2.stdout_lines == ""
 
