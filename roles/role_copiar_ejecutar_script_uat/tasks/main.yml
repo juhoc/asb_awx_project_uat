@@ -31,25 +31,30 @@
 - name: Mover archivo UAT
   become: yes
   become_method: sudo
-  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
-  with_items:
-    - "{{ sldeuat2.stdout_lines }}"
+  ansible.builtin.shell: mv /tmp/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }} /var/opt/ansible/UAT
 
-- name: Desplegar contebinido de archivo UAT
-  ansible.builtin.command:
-    cmd: cat /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
-  register: sldeuat3
-  failed_when: sldeuat3.stdout_lines == ""
+#- name: Mover archivo UAT
+#  become: yes
+#  become_method: sudo
+#  ansible.builtin.shell: mv /tmp/{{ item }} /var/opt/ansible/UAT
+#  with_items:
+#    - "{{ sldeuat2.stdout_lines }}"
 
-- name: Imprime contenido de archivo UAT
-  debug:
-    msg: "{{ sldeuat3.stdout_lines }}"
+#- name: Desplegar contebinido de archivo UAT
+#  ansible.builtin.command:
+#    cmd: cat /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
+#  register: sldeuat3
+#  failed_when: sldeuat3.stdout_lines == ""
 
-- name: Crea archivo con el nombre asignado a UAT
-  ansible.builtin.file:
-    path: /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
-    state: touch
-  delegate_to: clientasbrepo01.asbawx.clt
+#- name: Imprime contenido de archivo UAT
+#  debug:
+#    msg: "{{ sldeuat3.stdout_lines }}"
+
+#- name: Crea archivo con el nombre asignado a UAT
+#  ansible.builtin.file:
+#    path: /var/opt/ansible/UAT/{{ sldeuat2.stdout | regex_replace('\["|\]"', '') }}
+#    state: touch
+#  delegate_to: clientasbrepo01.asbawx.clt
 
 - name: Agregar contenido al archivo UAT
   ansible.builtin.copy:
