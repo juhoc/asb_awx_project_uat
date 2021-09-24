@@ -5,7 +5,7 @@
 
 - name: Imprime formato directory UIDEXT
   debug:
-    msg: "{{ sldeuat2.stdout }}"
+    msg: "{{ sldeuat0.stdout }}"
 
 - name: Crear directorio de UIDEXT
   ansible.builtin.file:
