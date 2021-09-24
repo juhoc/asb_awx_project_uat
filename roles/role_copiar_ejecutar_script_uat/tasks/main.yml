@@ -12,3 +12,4 @@
     path: /repouidext/{{ sldeuat0.stdout }}
     state: directory
     mode: 0700
+  delegate_to: clientasbrepo01.asbawx.clt
