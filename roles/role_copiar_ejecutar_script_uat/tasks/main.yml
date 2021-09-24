@@ -9,6 +9,6 @@
 
 - name: Crear directorio de UIDEXT
   ansible.builtin.file:
-    path: /repouidex/{{ sldeuat0.stdout }}
+    path: /repouidex/{{ sldeuat0.stdout | regex_replace('\["|\]"', '') }}
     state: directory
     mode: 0700
