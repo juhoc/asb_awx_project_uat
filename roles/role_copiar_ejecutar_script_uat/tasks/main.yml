@@ -43,3 +43,8 @@
 - name: Imprime contenido de archivo UIDEXT en nodo administrado
   debug:
     msg: "{{ sldeuat2.stdout }}"
+
+- name: Mover archivo UIDEXT
+  become: yes
+  become_method: sudo
+  ansible.builtin.shell: mv /tmp/{{ sldeuat2.stdout }} /var/opt/ansible/UIDEXT
