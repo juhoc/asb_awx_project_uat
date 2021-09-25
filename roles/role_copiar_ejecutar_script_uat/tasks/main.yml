@@ -3,7 +3,7 @@
     cmd: date +%d%m%yUIDEXT
   register: sldeuat0
 
-- name: Imprime directory fecha UIDEXT en repositorio delegado
+- name: Imprimir directory fecha UIDEXT en repositorio delegado
   debug:
     msg: "{{ sldeuat0.stdout }}"
 
@@ -35,12 +35,12 @@
   register: sldeuat1
   failed_when: sldeuat1.rc not in [ 0, 1 ]
 
-- name: Buscar archivo UIDEXT en el nodo administrado
+- name: Nombre del archivo UIDEXT en el nodo administrado
   ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
   register: sldeuat2
   failed_when: sldeuat2.stdout_lines == ""
 
-- name: Imprime contenido de archivo UIDEXT en nodo administrado
+- name: Imprimir nombre del archivo UIDEXT en nodo administrado
   debug:
     msg: "{{ sldeuat2.stdout }}"
 
