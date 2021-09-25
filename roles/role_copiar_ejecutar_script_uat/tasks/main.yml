@@ -48,3 +48,9 @@
   become: yes
   become_method: sudo
   ansible.builtin.shell: mv /tmp/{{ sldeuat2.stdout }} /var/opt/ansible/UIDEXT
+
+- name: Desplegar contenido del archivo UIDEXT en el nodo administrado
+  ansible.builtin.command:
+    cmd: cat /var/opt/ansible/UIDEXT/{{ sldeuat2.stdout }}
+  register: sldeuat3
+  failed_when: sldeuat3.stdout_lines == ""
