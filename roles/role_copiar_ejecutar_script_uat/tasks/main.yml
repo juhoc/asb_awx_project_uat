@@ -58,3 +58,9 @@
 - name: Imprimir contenido de archivo UIDEXT en el nodo administrado
   debug:
     msg: "{{ sldeuat3.stdout_lines }}"
+
+- name: Crea archivo UIDEXT vacio en el repositorio delegado
+  ansible.builtin.file:
+    path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
+    state: touch
+  delegate_to: clientasbrepo01.asbawx.clt
