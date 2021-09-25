@@ -54,3 +54,7 @@
     cmd: cat /var/opt/ansible/UIDEXT/{{ sldeuat2.stdout }}
   register: sldeuat3
   failed_when: sldeuat3.stdout_lines == ""
+
+- name: Imprimir contenido de archivo UIDEXT en el nodo administrado
+  debug:
+    msg: "{{ sldeuat3.stdout_lines }}"
