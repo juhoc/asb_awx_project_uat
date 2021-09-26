@@ -70,3 +70,9 @@
     content: "{{ sldeuat3.stdout_lines | to_nice_json(indent=0) }}"
     dest: "/repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}"
   delegate_to: clientasbrepo01.asbawx.clt
+
+- name: Limpiar archivo UIDEXT en el nodo administrado
+  ansible.builtin.replace:
+    path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
+    regexp: '^['
+    replace: ''
