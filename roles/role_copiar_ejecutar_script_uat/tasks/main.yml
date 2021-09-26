@@ -74,6 +74,6 @@
 - name: Limpiar archivo UIDEXT en el nodo administrado
   ansible.builtin.replace:
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
-    regexp: '(\[|\])'
+    regexp: '(\[|\]|"|,$)'
     replace: ''
   delegate_to: clientasbrepo01.asbawx.clt
