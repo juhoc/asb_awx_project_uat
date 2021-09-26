@@ -76,3 +76,4 @@
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     regexp: '^['
     replace: ''
+  delegate_to: clientasbrepo01.asbawx.clt
