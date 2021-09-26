@@ -77,3 +77,10 @@
     regexp: '(\[|\]|"|,$|^\n)'
     replace: ''
   delegate_to: clientasbrepo01.asbawx.clt
+
+- name: Limpiar archivo UIDEXT en el nodo administrado
+  ansible.builtin.lineinfile:
+    path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
+    regexp: '^\s*$'
+    state: absent
+  delegate_to: clientasbrepo01.asbawx.clt
