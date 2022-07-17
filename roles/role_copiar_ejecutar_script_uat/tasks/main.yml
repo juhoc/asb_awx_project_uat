@@ -14,7 +14,7 @@
     path: /repouidext/{{ sldeuat0.stdout }}
     state: directory
     mode: 0700
-  delegate_to: clientasbrepo01.asbawx.clt
+  delegate_to: {{ asb_delegado_a }}.asb.awx.ldn.mx
   tgas: directoriofecha
 
 - name: Crear directorio de UIDEXT en el nodo administrado
@@ -73,14 +73,14 @@
   ansible.builtin.file:
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     state: touch
-  delegate_to: clientasbrepo01.asbawx.clt
+  delegate_to: {{ asb_delegado_a }}.asb.awx.ldn.mx
   tgas: archivovacio
 
 - name: Agregar resultado de ejecucion UIDEXT en repositorio delegado
   ansible.builtin.copy:
     content: "{{ sldeuat3.stdout_lines | to_nice_json(indent=0) }}"
     dest: "/repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}"
-  delegate_to: clientasbrepo01.asbawx.clt
+  delegate_to: {{ asb_delegado_a }}.asb.awx.ldn.mx
   tgas: archivoresultado  
 
 - name: Limpiar archivo UIDEXT en el nodo administrado
@@ -88,11 +88,11 @@
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     regexp: '(\[|\]|"|,$|^\n)'
     replace: ''
-  delegate_to: clientasbrepo01.asbawx.clt
+  delegate_to: {{ asb_delegado_a }}.asb.awx.ldn.mx
 
 - name: Limpiar archivo UIDEXT en el nodo administrado
   ansible.builtin.lineinfile:
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     regexp: '^\s*$'
     state: absent
-  delegate_to: clientasbrepo01.asbawx.clt
+  delegate_to: {{ asb_delegado_a }}.asb.awx.ldn.mx
