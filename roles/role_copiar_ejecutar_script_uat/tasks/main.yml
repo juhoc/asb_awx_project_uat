@@ -4,7 +4,7 @@
   register: sldeuat0
 #  tgas: formatofecha
 
-- name: Imprimir directory fecha UIDEXT en repositorio delegado
+- name: Imprimir directorio fecha UIDEXT en repositorio delegado
   debug:
     msg: "{{ sldeuat0.stdout }}"
 #  tgas: imprimirfecha
