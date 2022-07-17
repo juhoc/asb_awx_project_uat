@@ -2,7 +2,7 @@
   ansible.builtin.shell:
     cmd: date +%d%m%yUIDEXT
   register: sldeuat0
-#  tgas: formatofecha
+  tgas: formatofecha
 
 - name: Imprimir directorio fecha UIDEXT en repositorio delegado
   debug:
