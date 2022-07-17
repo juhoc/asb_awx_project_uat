@@ -1,5 +1,8 @@
 - name: Main Task
   hosts: all
+  vars:
+     - asb_delegado_a: "Equipo delegado a"  
+  
   tasks:
     - include_role:
         name: role_copiar_ejecutar_script_uat
