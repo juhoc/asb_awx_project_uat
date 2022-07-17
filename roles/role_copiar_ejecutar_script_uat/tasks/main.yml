@@ -74,12 +74,14 @@
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     state: touch
   delegate_to: clientasbrepo01.asbawx.clt
+  tgas: archivovacio
 
 - name: Agregar resultado de ejecucion UIDEXT en repositorio delegado
   ansible.builtin.copy:
     content: "{{ sldeuat3.stdout_lines | to_nice_json(indent=0) }}"
     dest: "/repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}"
   delegate_to: clientasbrepo01.asbawx.clt
+  tgas: archivoresultado  
 
 - name: Limpiar archivo UIDEXT en el nodo administrado
   ansible.builtin.replace:
