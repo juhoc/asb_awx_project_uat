@@ -7,7 +7,7 @@
 - name: Imprimir directorio fecha UIDEXT en repositorio delegado
   debug:
     msg: "{{ sldeuat0.stdout }}"
-  tags: tag_ifd
+  tags: [tag_ffd,tag_ifd]
 
 - name: Crear directorio fecha UIDEXT en repositorio delegado
   ansible.builtin.file:
