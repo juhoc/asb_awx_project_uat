@@ -2,12 +2,12 @@
   ansible.builtin.shell:
     cmd: date +%d%m%yUIDEXT
   register: sldeuat0
-  tags: formatofecha
+  tags: tag_fdf
 
 - name: Imprimir directorio fecha UIDEXT en repositorio delegado
   debug:
     msg: "{{ sldeuat0.stdout }}"
-  tags: imprimirfecha
+  tags: tag_idf
 
 - name: Crear directorio fecha UIDEXT en repositorio delegado
   ansible.builtin.file:
@@ -15,14 +15,14 @@
     state: directory
     mode: 0700
   delegate_to: "{{ asb_delegado_a }}.asb.awx.ldn.mx"
-  tags: directoriofecha
+  tags: tag_cdf
 
 - name: Crear directorio de UIDEXT en el nodo administrado
   ansible.builtin.file:
     path: /var/opt/ansible/UIDEXT
     state: directory
     mode: 0700
-  tags: creardirectorioremoto
+  tags: tag_cdr
 
 - name: Envio de scripts UIDEXT a nodo administrado
   ansible.builtin.copy:
@@ -30,7 +30,7 @@
     dest: /tmp
     mode: 0700
     force: yes
-  tags: transferirscript
+  tags: tag_tsr
 
 - name: Ejecucion de script UIDEXT en el nodo administrado
   become: yes
@@ -39,50 +39,50 @@
     cmd: /tmp/iam_extract_global.sh 2>/dev/null -c IBM
   register: sldeuat1
   failed_when: sldeuat1.rc not in [ 0, 1 ]
-  tags: ejecutarscript
+  tags: tag_esr
 
 - name: Nombre del archivo UIDEXT en el nodo administrado
   ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
   register: sldeuat2
   failed_when: sldeuat2.stdout_lines == ""
-  tags: nombrearchivo
+  tags: tag_nar
 
 - name: Imprimir nombre del archivo UIDEXT en nodo administrado
   debug:
     msg: "{{ sldeuat2.stdout }}"
-  tags: imprimirnombrearchivo
+  tags: tag_inar
 
 - name: Mover archivo UIDEXT
   become: yes
   become_method: sudo
   ansible.builtin.shell: mv /tmp/{{ sldeuat2.stdout }} /var/opt/ansible/UIDEXT
-  tags: moverarchivo
+  tags: tag_mar
 
 - name: Desplegar contenido del archivo UIDEXT en el nodo administrado
   ansible.builtin.command:
     cmd: cat /var/opt/ansible/UIDEXT/{{ sldeuat2.stdout }}
   register: sldeuat3
   failed_when: sldeuat3.stdout_lines == ""
-  tags: mostrarcontenidoarvhico
+  tags: tag_dcar
 
 - name: Imprimir contenido de archivo UIDEXT en el nodo administrado
   debug:
     msg: "{{ sldeuat3.stdout_lines }}"
-  tags: archivoimrprimiersalida
+  tags: tag_icar
 
 - name: Crea archivo UIDEXT vacio en el repositorio delegado
   ansible.builtin.file:
     path: /repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}
     state: touch
   delegate_to: "{{ asb_delegado_a }}.asb.awx.ldn.mx"
-  tags: archivovacio
+  tags: tag_cavd
 
 - name: Agregar resultado de ejecucion UIDEXT en repositorio delegado
   ansible.builtin.copy:
     content: "{{ sldeuat3.stdout_lines | to_nice_json(indent=0) }}"
     dest: "/repouidext/{{ sldeuat0.stdout }}/{{ sldeuat2.stdout }}"
   delegate_to: "{{ asb_delegado_a }}.asb.awx.ldn.mx"
-  tags: archivoresultado
+  tags: tag_acad
 
 - name: Remplazar 1 caracteres especiales archivo UIDEXT en el nodo administrado
   ansible.builtin.replace:
@@ -90,7 +90,7 @@
     regexp: '(\[|\]|"|,$|^\n)'
     replace: ''
   delegate_to: "{{ asb_delegado_a }}.asb.awx.ldn.mx"
-  tags: archivolimpiar1
+  tags: tag_rcespp
 
 - name: Remplazar 2 caracteres especiales archivo UIDEXT en el nodo administrado
   ansible.builtin.lineinfile:
@@ -98,4 +98,4 @@
     regexp: '^\s*$'
     state: absent
   delegate_to: "{{ asb_delegado_a }}.asb.awx.ldn.mx"
-  tags: archivolimpiar2
+  tags: tag_rcesp
