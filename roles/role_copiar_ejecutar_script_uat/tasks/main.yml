@@ -45,7 +45,7 @@
   ansible.builtin.shell: ls -1rt /tmp | grep ^IBM
   register: sldeuat2
   failed_when: sldeuat2.stdout_lines == ""
-  tags: formatofecha
+  tags: nombrearchivo
 
 - name: Imprimir nombre del archivo UIDEXT en nodo administrado
   debug:
