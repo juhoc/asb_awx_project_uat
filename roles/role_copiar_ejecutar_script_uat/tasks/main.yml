@@ -2,12 +2,12 @@
   ansible.builtin.shell:
     cmd: date +%d%m%yUIDEXT
   register: sldeuat0
-  tags: tag_fdf
+  tags: tag_ffd
 
 - name: Imprimir directorio fecha UIDEXT en repositorio delegado
   debug:
     msg: "{{ sldeuat0.stdout }}"
-  tags: tag_idf
+  tags: tag_ifd
 
 - name: Crear directorio fecha UIDEXT en repositorio delegado
   ansible.builtin.file:
